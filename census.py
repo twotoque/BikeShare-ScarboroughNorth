@@ -2,32 +2,36 @@ from dash import Dash, dcc, html, Input, Output
 import plotly.express as px
 import pandas 
 
-censusData = px.data.tips()
+censusData = pandas.read_csv('data/Ward23CensusData.csv')
+row = censusData.iloc[2581]
+
+
 
 app = Dash(__name__)
+import plotly.express as px
+import pandas 
+
+censusData = pandas.read_csv('data/Ward23CensusData.csv')
+row = censusData.iloc[2581]
+print(row)
 
 
-app.layout = html.Div([
-    html.H4('Restaurant tips by day of week'),
-    dcc.Dropdown(
-        id="dropdown",
-        options=["Fri", "Sat", "Sun"],
-        value="Fri",
-        clearable=False,
-    ),
-    dcc.Graph(id="graph"),
-])
+x_values = row.index[1:] 
+y_values_str = row.values[1:]
+y_values = pandas.to_numeric(y_values_str)
 
+print("x values:", x_values)
+print("y values:", y_values)
 
-@app.callback(
-    Output("graph", "figure"), 
-    Input("dropdown", "value"))
+plot_censusData = pandas.DataFrame({
+    'Neighbourhood': x_values,
+    'Value': y_values
+})
 
-def update_bar_chart(day):
-    mask = censusData["day"] == day
-    fig = px.bar(censusData[mask], x="sex", y="total_bill", 
-                 color="smoker", barmode="group")
-    return fig
+fig = px.bar(plot_censusData, x='Neighbourhood', y='Value', title='Neighbourhood Values')
+fig.update_layout(yaxis=dict(range=[0, max(y_values) + 10]))
+
+fig.show()
 
 def export_pdf(fig):
     fig.write_image("figure.pdf", format="pdf")
