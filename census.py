@@ -1,5 +1,6 @@
 from dash import Dash, dcc, html, Input, Output
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas
 i = 0 
 n = 0
@@ -26,11 +27,13 @@ for i in range(neighbourhoods):
     rowArray.append(censusData.iloc[selectArray[i]])
     i += 1
 
-
-
 #Values 
 carValues = list(map(int, rowArray[0].iloc[1:].values))
 transitValues = list(map(int, rowArray[1].iloc[1:].values))
+walkValues = list(map(int, rowArray[2].iloc[1:].values))
+bikeValues = list(map(int, rowArray[3].iloc[1:].values))
+otherValues = list(map(int, rowArray[4].iloc[1:].values))
+numberValues = 5
 
 x_values = rowArray[0].index[1:]
 
@@ -39,38 +42,36 @@ plot_censusData = pandas.DataFrame({
     'Neighbourhood': x_values,
     'Car': carValues,
     'Transit': transitValues,
+    'Walk': walkValues,
+    'Bike': bikeValues,
+    'Other': otherValues,
 })
 
-# Melt the DataFrame to long format
+#Melt the DataFrame to long format
 plotMelt_censusData = plot_censusData.melt(id_vars='Neighbourhood', var_name='Category', value_name='Value')
 
-# Plot the stacked bar chart
-fig = px.bar(plotMelt_censusData, x='Neighbourhood', y='Value', color='Category', title='Neighbourhood Values')
+#Assign bar graph variable
+fig_bar = go.Figure()
 
-fig.update_layout(yaxis=dict(range=[0, plotMelt_censusData['Value'].max() + 1000]))
+#Plotly tracing
+for category in plotMelt_censusData['Category'].unique():
+    category_data = plotMelt_censusData[plotMelt_censusData ['Category'] == category]
+    fig_bar.add_trace(go.Bar(
+        x=category_data['Neighbourhood'],
+        y=category_data['Value'],
+        name=category
+    ))
 
-fig.show()
 
-print(plotMelt_censusData)
-'''
-app = Dash(__name__)
+#Render bar graph
+fig_bar.update_layout(
+    title='Main mode of commuting for the employed labour force aged 15 years and over with a usual place of work or no fixed workplace address - 25% sample data, Census 2021',
+    xaxis_title='Neighbourhood',
+    yaxis_title='Value',
+    barmode='stack'  
+)
 
-
-
-y_values_str = row.values[1:]
-y_values = pandas.to_numeric(y_values_str)
-print("x values:", x_values)
-print("y values:", y_values)
-
-plot_censusData = pandas.DataFrame({
-    'Neighbourhood': x_values,
-    'Value': y_values
-})
-
-fig = px.bar(plot_censusData, x='Neighbourhood', y='Value', title='Neighbourhood Values')
-fig.update_layout(yaxis=dict(range=[0, max(y_values) + 10]))
-
-fig.show()
+fig_bar.show()
 
 def export_pdf(fig):
     fig.write_image("figure.pdf", format="pdf")
@@ -82,9 +83,3 @@ if __name__ == "__main__":
         export_pdf(fig)
 
 app.run_server(debug=True)
-
-    'Transit': rowArray[1].iloc[1:].values,
-    'Walk': rowArray[2].iloc[1:].values,  
-    'Bike': rowArray[3].iloc[1:].values,  
-    'Other': rowArray[4].iloc[1:].values
-'''
