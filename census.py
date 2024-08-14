@@ -29,8 +29,8 @@ for i in range(neighbourhoods):
 
 
 #Values 
-carValues = rowArray[0].iloc[1:].values
-transitValues = rowArray[1].iloc[1:].values
+carValues = list(map(int, rowArray[0].iloc[1:].values))
+transitValues = list(map(int, rowArray[1].iloc[1:].values))
 
 x_values = rowArray[0].index[1:]
 
@@ -46,6 +46,8 @@ plotMelt_censusData = plot_censusData.melt(id_vars='Neighbourhood', var_name='Ca
 
 # Plot the stacked bar chart
 fig = px.bar(plotMelt_censusData, x='Neighbourhood', y='Value', color='Category', title='Neighbourhood Values')
+
+fig.update_layout(yaxis=dict(range=[0, plotMelt_censusData['Value'].max() + 1000]))
 
 fig.show()
 
