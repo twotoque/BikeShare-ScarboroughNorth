@@ -5,6 +5,13 @@ import json
 
 
 def torontoCensusMap (rowCompare, title):
+    '''
+    A function to convert a single row of census 2021 data to a map relative to Toronto's neighbourhoods. 
+    ----
+    Parameters:
+        rowCompare - the row in file "data/CityCensusData.csv" to measure data from (int)
+        title - the title of the graph (str)
+    '''
     #Opens up geoData, reads and converts it to a JSON (feature), then converts it to a FeatureCollection readable by plotly
     geoData = gpd.read_file("data/Neighbourhoods.geojson")
     geoDataJSON = geoData.to_json()
