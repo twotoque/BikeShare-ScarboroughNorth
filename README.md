@@ -11,6 +11,6 @@ To start, download all of the files and install Python. On command line install 
 * **JSON interpreter**: `pip install json`
 * **Dash**: `pip install dash`
 
-Then simply run 'py [name].py'. For example, if you wanted to run 'maptest.py' then on your command prompt run 'py maptest.py'.
+Then simply run `py [name].py`. For example, if you wanted to run `maptest.py` then on your command prompt run `py maptest.py`.
 
 Enjoy! 
