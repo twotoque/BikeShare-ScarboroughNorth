@@ -1,4 +1,5 @@
 from dash import Dash, dcc, html, Input, Output
+import plotly.express 
 import plotly.graph_objects as go
 import pandas
 i = 0 
@@ -13,16 +14,15 @@ walkRowSelect = 2581
 bikeRowSelect = 2582
 otherRowSelect = 2583
 
-#Number of neighbourhoods
-neighbourhoods = 5
-
 #Due to the way the census csv is formatted, it counts the header as a row, plus zero indexing. 
 selectArray = [carRowSelect - 2, transitRowSelect - 2, walkRowSelect - 2, bikeRowSelect - 2, otherRowSelect - 2]
 
 #Load census csv data
-censusData = pandas.read_csv('data/Ward23CensusData.csv')
+censusData = pandas.read_csv('data/CityCensusData.csv')
 
-for i in range(neighbourhoods):
+numberItems = 5
+
+for i in range(numberItems):
     rowArray.append(censusData.iloc[selectArray[i]])
     i += 1
 
