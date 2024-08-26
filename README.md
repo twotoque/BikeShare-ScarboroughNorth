@@ -14,7 +14,7 @@ To start, download all of the files and install Python. On command line install 
 Then simply run `py [name].py`. For example, if you wanted to run `maptest.py` then on your command prompt run `py maptest.py`.
 
 Data sourced from Toronto's Open Data repository:
-* Neighbourhood census data sourced from: [https://open.toronto.ca/dataset/neighbourhood-profiles/]
-* Neighbourhood boundaries sourced from: [https://open.toronto.ca/dataset/neighbourhoods/]
+* Neighbourhood census data sourced from: https://open.toronto.ca/dataset/neighbourhood-profiles
+* Neighbourhood boundaries sourced from: https://open.toronto.ca/dataset/neighbourhoods
 
 Enjoy! 
