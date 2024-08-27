@@ -11,8 +11,6 @@ geoDataDict = {
     "features": geoDataDict['features']
 }
 
-df_geo = pandas.DataFrame(geoData.drop(columns='geometry'))
-
 
 censusData = pandas.read_csv("data/CityCensusData.csv")
 
@@ -20,12 +18,12 @@ rowCompare = 2582
 rowCompare -= 2
 print(censusData.columns)
 
+
+df_geo = pandas.DataFrame(geoData.drop(columns='geometry'))
+print(df_geo)
 for _, row in df_geo.iterrows():
     neighbourhood_name = row['AREA_NAME']
     
     if neighbourhood_name in censusData.columns:
-        print(f"Neighbourhood '{neighbourhood_name}' found in censusData columns.")
-        
         neighbourhood_data = censusData[neighbourhood_name]
-        print(f"Data for {neighbourhood_name}:")
         print(neighbourhood_data)

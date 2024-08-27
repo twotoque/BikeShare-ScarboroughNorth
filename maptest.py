@@ -20,6 +20,7 @@ def torontoCensusMap (rowCompare, title):
         "type": "FeatureCollection",
         "features": geoDataDict['features']
     }
+    rowArray = []
 
     #Imports Census Data
     censusData = pandas.read_csv("data/CityCensusData.csv")
@@ -28,15 +29,26 @@ def torontoCensusMap (rowCompare, title):
     rowCompare -= 2
 
     #Traverses censusData, appends the rowCompare value as an int relative to Neighbourhood array
-    rowArray = []
-    rowArray.append(censusData.iloc[rowCompare])
-    carValues = list(map(int, rowArray[0].iloc[1:].values))
-    print(rowArray)
 
+
+
+    df_geo = pandas.DataFrame(geoData.drop(columns='geometry'))
+    for _, row in df_geo.iterrows():
+        neighbourhood_name = row['AREA_NAME']
+        
+        if neighbourhood_name in censusData.columns:
+            neighbourhood_data = censusData[neighbourhood_name] 
+            rowArray.append(neighbourhood_data[rowCompare])
+        else: 
+            print(f"Not appended {neighbourhood_name}")
+
+    print(len(geoData["AREA_ID"]))
+    print(rowArray)
+    print(len(rowArray))
     fig = go.Figure(go.Choroplethmapbox(
         geojson=geoDataDict,
         locations=geoData["AREA_ID"],  
-        z=carValues,  
+        z=rowArray,  
         marker_opacity=0.5,
         marker_line_width=1,
         featureidkey="properties.AREA_ID",  
@@ -54,5 +66,4 @@ def torontoCensusMap (rowCompare, title):
 
 
     fig.show()
-
 torontoCensusMap(2582, "Amount of Census 2021 respondents who listed Biking as a method of transportation")
