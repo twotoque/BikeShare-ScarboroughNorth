@@ -4,7 +4,7 @@ import pandas
 import json
 
 
-def torontoCensusMap (rowCompare, title):
+def ward23CensusMap (rowCompare, title):
     '''
     A function to convert a single row of census 2021 data to a map relative to Toronto's neighbourhoods. 
     ----
@@ -13,7 +13,7 @@ def torontoCensusMap (rowCompare, title):
         title - the title of the graph (str)
     '''
     #Opens up geoData, reads and converts it to a JSON (feature), then converts it to a FeatureCollection readable by plotly
-    geoData = gpd.read_file("data/Neighbourhoods.geojson")
+    geoData = gpd.read_file("data/Ward23Neighbourhoods.geojson")
     geoDataJSON = geoData.to_json()
     geoDataDict = json.loads(geoDataJSON)
     geoDataDict = {
@@ -22,7 +22,7 @@ def torontoCensusMap (rowCompare, title):
     }
 
     #Imports Census Data
-    censusData = pandas.read_csv("data/CityCensusData.csv")
+    censusData = pandas.read_csv("data/Ward23CensusData.csv")
 
     #Subtracts two for header and zero indexing
     rowCompare -= 2
@@ -32,6 +32,7 @@ def torontoCensusMap (rowCompare, title):
     rowArray.append(censusData.iloc[rowCompare])
     carValues = list(map(int, rowArray[0].iloc[1:].values))
     print(rowArray)
+
 
     fig = go.Figure(go.Choroplethmapbox(
         geojson=geoDataDict,
@@ -55,4 +56,4 @@ def torontoCensusMap (rowCompare, title):
 
     fig.show()
 
-torontoCensusMap(2582, "Amount of Census 2021 respondents who listed Biking as a method of transportation")
+ward23CensusMap(2582, "Amount of Census 2021 respondents who listed Biking as a method of transportation")
