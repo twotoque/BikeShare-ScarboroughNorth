@@ -4,7 +4,7 @@ import pandas
 import json
 
 
-def torontoCensusMap (rowCompare, title):
+def ward23CensusMap (rowCompare, title):
     '''
     A function to convert a single row of census 2021 data to a map relative to Toronto's neighbourhoods. 
     ----
@@ -13,42 +13,31 @@ def torontoCensusMap (rowCompare, title):
         title - the title of the graph (str)
     '''
     #Opens up geoData, reads and converts it to a JSON (feature), then converts it to a FeatureCollection readable by plotly
-    geoData = gpd.read_file("data/Neighbourhoods.geojson")
+    geoData = gpd.read_file("data/Ward23Neighbourhoods.geojson")
     geoDataJSON = geoData.to_json()
     geoDataDict = json.loads(geoDataJSON)
     geoDataDict = {
         "type": "FeatureCollection",
         "features": geoDataDict['features']
     }
-    rowArray = []
 
     #Imports Census Data
-    censusData = pandas.read_csv("data/CityCensusData.csv")
+    censusData = pandas.read_csv("data/Ward23CensusData.csv")
 
     #Subtracts two for header and zero indexing
     rowCompare -= 2
 
     #Traverses censusData, appends the rowCompare value as an int relative to Neighbourhood array
-
-
-
-    df_geo = pandas.DataFrame(geoData.drop(columns='geometry'))
-    for _, row in df_geo.iterrows():
-        neighbourhood_name = row['AREA_NAME']
-        
-        if neighbourhood_name in censusData.columns:
-            neighbourhood_data = censusData[neighbourhood_name] 
-            rowArray.append(neighbourhood_data[rowCompare])
-        else: 
-            print(f"Not appended {neighbourhood_name}")
-
-    print(len(geoData["AREA_ID"]))
+    rowArray = []
+    rowArray.append(censusData.iloc[rowCompare])
+    carValues = list(map(int, rowArray[0].iloc[1:].values))
     print(rowArray)
-    print(len(rowArray))
+
+
     fig = go.Figure(go.Choroplethmapbox(
         geojson=geoDataDict,
         locations=geoData["AREA_ID"],  
-        z=rowArray,  
+        z=carValues,  
         marker_opacity=0.5,
         marker_line_width=1,
         featureidkey="properties.AREA_ID",  
@@ -66,4 +55,5 @@ def torontoCensusMap (rowCompare, title):
 
 
     fig.show()
-torontoCensusMap(2582, "Amount of Census 2021 respondents who listed Biking as a method of transportation")
+
+ward23CensusMap(2582, "Amount of Census 2021 respondents who listed Biking as a method of transportation")
