@@ -29,15 +29,22 @@ def ward23CensusMap (rowCompare, title):
 
     #Traverses censusData, appends the rowCompare value as an int relative to Neighbourhood array
     rowArray = []
-    rowArray.append(censusData.iloc[rowCompare])
-    carValues = list(map(int, rowArray[0].iloc[1:].values))
-    print(rowArray)
+    df_geo = pandas.DataFrame(geoData.drop(columns='geometry'))
+    for _, row in df_geo.iterrows():
+        neighbourhood_name = row['AREA_NAME']
+        
+        if neighbourhood_name in censusData.columns:
+            neighbourhood_data = censusData[neighbourhood_name] 
+            rowArray.append(neighbourhood_data[rowCompare])
+        else: 
+            print(f"Not appended {neighbourhood_name}")
+
 
 
     fig = go.Figure(go.Choroplethmapbox(
         geojson=geoDataDict,
         locations=geoData["AREA_ID"],  
-        z=carValues,  
+        z=rowArray,  
         marker_opacity=0.5,
         marker_line_width=1,
         featureidkey="properties.AREA_ID",  

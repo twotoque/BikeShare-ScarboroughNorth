@@ -20,6 +20,14 @@ def torontoCensusMap (rowCompare, title):
         "type": "FeatureCollection",
         "features": geoDataDict['features']
     }
+
+    ward23GeoData = gpd.read_file("data/Ward23.geojson")
+    ward23GeoDataDict = {
+        "ward23GeoData": "FeatureCollection",
+        "features": ward23GeoData['geometry']
+    }
+    print("Dict data")
+    print(ward23GeoDataDict)
     rowArray = []
 
     #Imports Census Data
@@ -59,10 +67,22 @@ def torontoCensusMap (rowCompare, title):
 
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
+    
+    fig.add_trace(go.Scattergeo(
+        lon=[coord[0] for coord in polygon_coords],
+        lat=[coord[1] for coord in polygon_coords],
+        fill='toself',  # Fill the polygon
+        fillcolor='rgba(255, 0, 0, 0.5)',  # Color of the fill (with transparency)
+        line=dict(color='red', width=2),  # Outline color and width
+        mode='lines+markers',  # Display both lines and markers
+        name='Polygon'
+    ))
+
 
     fig.update_layout(
         title={"text": title, "x": 0.5, "xanchor": "center", "yanchor": "top", "font": {"size": 25}}
     )
+
 
 
     fig.show()
