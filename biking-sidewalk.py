@@ -3,10 +3,6 @@ import plotly.graph_objects as go
 import pandas
 
 def bikingInfrastructBar(filePath, title):  
-    i = 0 
-    n = 0
-    rowArray = []
-    selectArray = []
     traceList = []
 
     #Load csv data
@@ -30,7 +26,7 @@ def bikingInfrastructBar(filePath, title):
     fig_bar.update_layout(barmode="stack", xaxis_title="Rating (lower is safer)", yaxis_title="Count", title= title)
     fig_bar.show()
 
-bikingInfrastructBar("./data/BikingInfrastructure-Sidewalks.csv", "Sidewalk safety ratings")
+bikingInfrastructBar("./data/BikingInfrastructure-Parks.csv", "Parks safety ratings")
 
 
 
