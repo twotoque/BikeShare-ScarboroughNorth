@@ -26,7 +26,7 @@ def bikingInfrastructBar(filePath, title):
     fig_bar.update_layout(barmode="stack", xaxis_title="Rating (lower is safer)", yaxis_title="Count", title= title)
     fig_bar.show()
 
-bikingInfrastructBar("./data/BikingInfrastructure-Parks.csv", "Parks safety ratings")
+bikingInfrastructBar("./data/BikingDemand-Spring.csv", "Biking Demand Spring")
 
 
 
