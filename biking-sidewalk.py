@@ -27,7 +27,7 @@ def bikingInfrastructBar(filePath, title):
         traceList.append(trace)
 
     fig_bar = go.Figure(data=traceList)
-    fig_bar.update_layout(barmode="stack", xaxis_title="Neighbourhood", yaxis_title="Count", title= title)
+    fig_bar.update_layout(barmode="stack", xaxis_title="Rating (lower is safer)", yaxis_title="Count", title= title)
     fig_bar.show()
 
 bikingInfrastructBar("./data/BikingInfrastructure-Sidewalks.csv", "Sidewalk safety ratings")
