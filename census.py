@@ -72,9 +72,7 @@ fig_bar.update_layout(
 
 fig_bar.show()
 
-def export_pdf(fig):
-    fig.write_image("figure.pdf", format="pdf")
-    return 
+fig_bar.write_image("figure.pdf", format="pdf", engine='kaleido')
 
 if __name__ == "__main__":
     import sys
