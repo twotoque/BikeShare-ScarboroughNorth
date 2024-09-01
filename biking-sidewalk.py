@@ -43,8 +43,10 @@ def transportationBar (filePath, title, xaxis_title, fileName = None):
 
 transportationBar("./data/BikingDemand-Spring.csv", "Ward 23 survey respondents regarding biking usage in Spring", "Number of times biked per week", "./pdf/SpringBikingUsage.pdf")
 transportationBar("./data/BikingDemand-Fall.csv", "Ward 23 survey respondents regarding biking usage in Fall","Number of times biked per week", "./pdf/FallBikingUsage.pdf")
-transportationBar("./data/BikingDemand-Winter.csv", "Ward 23 survey respondents regarding biking usage in Winter", "Number of times biked per week","./pdf/WinterBikingUsage.pdf")
+transportationBar("./data/BikingDemand-Winter.csv", "Ward 23 survey respondents regarding biking usage in Winter", "Number of times biked per week","./pdf/WinterBikingUsage.pdf") 
 transportationBar("./data/BikingDemand-Summer.csv", "Ward 23 survey respondents regarding biking usage in Summer","Number of times biked per week", "./pdf/SummerBikingUsage.pdf")
+transportationBar("./data/BikingJustification.csv", "Ward 23 survey respondents regarding reasons to bike as opposed to other transportation methods","Reasons given", "./pdf/BikingJustification.pdf")
+transportationBar("./data/BikingUseCases.csv", "Ward 23 survey respondents regarding general biking desintations","General biking destinations", "./pdf/BikingUseCases.pdf")
 
 
 
