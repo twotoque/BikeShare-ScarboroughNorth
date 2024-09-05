@@ -48,8 +48,10 @@ transportationBar("./data/BikingDemand-Winter.csv", "Ward 23 survey respondents 
 transportationBar("./data/BikingDemand-Summer.csv", "Ward 23 survey respondents regarding biking usage in Summer","Number of times biked per week", "./pdf/SummerBikingUsage.pdf")
 transportationBar("./data/BikingUseCases.csv", "Ward 23 survey respondents regarding general biking desintations","General biking destinations", "./pdf/BikingUseCases.pdf")
 transportationBar("./data/BikingJustification.csv", "Ward 23 survey respondents regarding reasons to bike as opposed to other transportation methods","Reasons given", "./pdf/BikingJustification.pdf")
-'''
 transportationBar("./data/PublicTransportationDestinations (r_=3).csv", "Ward 23 survey respondents regarding public transportation destinations (r>=3)","Destinations", "./pdf/PublicTransportationDestinations.pdf")
 transportationBar("./data/PublicTransportationUseCases.csv", "Ward 23 survey respondents regarding general public transportation destinations","Reasons given", "./pdf/PublicTransportationUseCases.pdf")
+'''
+transportationBar("./data/PublicTransportationInsteadBike.csv", "Ward 23 survey respondents justifying public transportation instead of biking","Reasons given", "./pdf/PublicTransportationInsteadBike.pdf")
+transportationBar("./data/PublicTransportationBike.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods","Responces", "./pdf/PublicTransportationBike.pdf")
 
 
