@@ -71,7 +71,9 @@ def transportationSunburstPie (filePath, title,fileName = None):
         parents=fileData["answer"],
         values=fileData["values"],
         branchvalues="total",
-        marker=dict(colors=fileData["colours"])
+        marker=dict(colors=fileData["colours"]),
+        text= fileData["values"],
+        textinfo="label+text",     
     ))
     fig_sun.update_layout (margin = dict(t=0, l=0, r=0, b=0), title= title)
     fig_sun.show()
