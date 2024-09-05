@@ -1,0 +1,16 @@
+id,answer,neighbourhood,values
+root,,Total,42
+Yes,root,Yes,10
+No,root,No,32
+Agincourt North - Yes,Yes,Agincourt North,2
+Agincourt South-Malvern West - Yes,Yes,Agincourt South-Malvern West,0
+Malvern West - Yes,Yes,Malvern West,0
+Malvern East - Yes,Yes,Malvern East,2
+Milliken - Yes,Yes,Milliken,2
+Morningside Heights - Yes,Yes,Morningside Heights,4
+Agincourt North - No,No,Agincourt North,11
+Agincourt South-Malvern West - No,No,Agincourt South-Malvern West,1
+Malvern West - No,No,Malvern West,4
+Malvern East - No,No,Malvern East,2
+Milliken - No,No,Milliken,9
+Morningside Heights - No,No,Morningside Heights,5

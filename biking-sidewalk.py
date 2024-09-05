@@ -40,7 +40,48 @@ def transportationBar (filePath, title, xaxis_title, fileName = None):
     if fileName is not None:
         fig_bar.write_image(fileName, format="pdf", engine="kaleido", width = "1300")
 
+
+def transportationSunburstPie (filePath, title,fileName = None):  
+    ''' 
+    Generates a sunburst pie graph assuming neighbourhood name is in the x rows and the category labels are in the y columns. 
+    ---
+    Parameters:
+        filePath - path of the data, in a csv form (str). Should have an
+            ID = The name of the outer circle (i.e. the parent and label in one line)
+            Answer = Parent of the subcategories (neighbourhood)
+            Neighbourhood - Neighbourhoods 
+            Value = Specific value
+        title - the title of the graph (str)
+        xaxis_title - title of the x-axis label (str)
+        fileName - the path where you want to export the file in a PDF form. If left blank, the graph will not be exported. (str)
+    '''
+
+    #Load csv data
+    fileData = pandas.read_csv(filePath)
+
+    colours = {
+        "Yes": "green",
+        "No": "red"
+    }
+    fileData["colours"] = fileData["neighbourhood"].map(colours)
+
+    fig_sun =go.Figure(go.Sunburst(
+        ids=fileData["id"],
+        labels=fileData["neighbourhood"],
+        parents=fileData["answer"],
+        values=fileData["values"],
+        branchvalues="total",
+        marker=dict(colors=fileData["colours"])
+    ))
+    fig_sun.update_layout (margin = dict(t=0, l=0, r=0, b=0), title= title)
+    fig_sun.show()
+    if fileName is not None:
+       fig_sun.write_image(fileName, format="pdf", engine="kaleido")
+
+
 '''
+
+
 
 transportationBar("./data/BikingDemand-Spring.csv", "Ward 23 survey respondents regarding biking usage in Spring", "Number of times biked per week", "./pdf/SpringBikingUsage.pdf")
 transportationBar("./data/BikingDemand-Fall.csv", "Ward 23 survey respondents regarding biking usage in Fall","Number of times biked per week", "./pdf/FallBikingUsage.pdf")
@@ -50,8 +91,10 @@ transportationBar("./data/BikingUseCases.csv", "Ward 23 survey respondents regar
 transportationBar("./data/BikingJustification.csv", "Ward 23 survey respondents regarding reasons to bike as opposed to other transportation methods","Reasons given", "./pdf/BikingJustification.pdf")
 transportationBar("./data/PublicTransportationDestinations (r_=3).csv", "Ward 23 survey respondents regarding public transportation destinations (r>=3)","Destinations", "./pdf/PublicTransportationDestinations.pdf")
 transportationBar("./data/PublicTransportationUseCases.csv", "Ward 23 survey respondents regarding general public transportation destinations","Reasons given", "./pdf/PublicTransportationUseCases.pdf")
-'''
 transportationBar("./data/PublicTransportationInsteadBike.csv", "Ward 23 survey respondents justifying public transportation instead of biking","Reasons given", "./pdf/PublicTransportationInsteadBike.pdf")
 transportationBar("./data/PublicTransportationBike.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods","Responces", "./pdf/PublicTransportationBike.pdf")
 
 
+
+'''
+transportationSunburstPie("./data/PublicTransportationBikeSunburst.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods", "./pdf/PublicTransportationBikeSunburstPie.pdf")
