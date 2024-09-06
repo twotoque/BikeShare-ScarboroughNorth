@@ -21,13 +21,6 @@ def torontoCensusMap (rowCompare, title):
         "features": geoDataDict['features']
     }
 
-    ward23GeoData = gpd.read_file("data/Ward23.geojson")
-    ward23GeoDataDict = {
-        "ward23GeoData": "FeatureCollection",
-        "features": ward23GeoData['geometry']
-    }
-    print("Dict data")
-    print(ward23GeoDataDict)
     rowArray = []
 
     #Imports Census Data
@@ -38,11 +31,9 @@ def torontoCensusMap (rowCompare, title):
 
     #Traverses censusData, appends the rowCompare value as an int relative to Neighbourhood array
 
-
-
-    df_geo = pandas.DataFrame(geoData.drop(columns='geometry'))
+    df_geo = pandas.DataFrame(geoData.drop(columns="geometry"))
     for _, row in df_geo.iterrows():
-        neighbourhood_name = row['AREA_NAME']
+        neighbourhood_name = row["AREA_NAME"]
         
         if neighbourhood_name in censusData.columns:
             neighbourhood_data = censusData[neighbourhood_name] 
@@ -50,9 +41,6 @@ def torontoCensusMap (rowCompare, title):
         else: 
             print(f"Not appended {neighbourhood_name}")
 
-    print(len(geoData["AREA_ID"]))
-    print(rowArray)
-    print(len(rowArray))
     fig = go.Figure(go.Choroplethmapbox(
         geojson=geoDataDict,
         locations=geoData["AREA_ID"],  
@@ -67,15 +55,34 @@ def torontoCensusMap (rowCompare, title):
 
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
+    #Appends Ward 23 outline
+
     
-    fig.add_trace(go.Scattergeo(
-        lon=[coord[0] for coord in polygon_coords],
-        lat=[coord[1] for coord in polygon_coords],
-        fill='toself',  # Fill the polygon
-        fillcolor='rgba(255, 0, 0, 0.5)',  # Color of the fill (with transparency)
-        line=dict(color='red', width=2),  # Outline color and width
-        mode='lines+markers',  # Display both lines and markers
-        name='Polygon'
+    ward23GeoData = gpd.read_file("data/Ward23.geojson")
+    ward23GeoDataJSON = ward23GeoData.to_json()
+    ward23GeoDataDict = json.loads(ward23GeoDataJSON)
+    ward23GeoDataDict = {
+        "ward23GeoData": "FeatureCollection",
+        "features": ward23GeoDataDict['features']
+    }
+
+    Ward23lonArray = []
+    Ward23latArray = []
+
+    for feature in ward23GeoDataDict["features"]:
+        geometry = feature["geometry"]
+        for polygon in geometry["coordinates"]:
+            for multiCoordinate in polygon:
+                for coordinate in multiCoordinate:
+                    Ward23lonArray.append(coordinate[0])
+                    Ward23latArray.append(coordinate[1])
+
+    fig.add_trace(go.Scattermapbox(
+        mode="lines",
+        lon=Ward23lonArray,
+        lat=Ward23latArray,
+        line=dict(width=5, color="red"),  
+        text = "Ward 23 Scarborough North"
     ))
 
 
