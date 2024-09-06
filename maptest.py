@@ -53,7 +53,7 @@ def torontoCensusMap (rowCompare, title):
 
     fig.update_layout(mapbox_style="carto-positron", mapbox_zoom=10, mapbox_center={"lat": 43.702, "lon": -79.395})
 
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.update_layout(margin={"r":0,"t":60,"l":0,"b":0})
 
     #Appends Ward 23 outline
 
@@ -78,19 +78,29 @@ def torontoCensusMap (rowCompare, title):
                     Ward23latArray.append(coordinate[1])
 
     fig.add_trace(go.Scattermapbox(
-        mode="lines",
+        mode = "lines",
+        showlegend=True,
         lon=Ward23lonArray,
         lat=Ward23latArray,
         line=dict(width=5, color="red"),  
-        text = "Ward 23 Scarborough North"
+        text = "Ward 23 Scarborough North",
+        name = "Ward 23 Scarborough North"  
     ))
 
 
     fig.update_layout(
-        title={"text": title, "x": 0.5, "xanchor": "center", "yanchor": "top", "font": {"size": 25}}
+        title={"text": title, "x": 0.5, "xanchor": "center", "yanchor": "top", "font": {"size": 25}},
+        legend=dict(
+            x=0.5,               
+            y=0.1,               
+            xanchor="center",  
+            yanchor="top",
+        )
+        
     )
 
 
 
     fig.show()
+
 torontoCensusMap(2582, "Amount of Census 2021 respondents who listed Biking as a method of transportation")
