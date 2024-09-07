@@ -13,7 +13,7 @@ def ward23CensusMap (rowCompare, title):
         title - the title of the graph (str)
     '''
     #Opens up geoData, reads and converts it to a JSON (feature), then converts it to a FeatureCollection readable by plotly
-    geoData = gpd.read_file("data/Ward23Neighbourhoods.geojson")
+    geoData = gpd.read_file(geoDataFilePath) #"data/Ward23Neighbourhoods.geojson"
     geoDataJSON = geoData.to_json()
     geoDataDict = json.loads(geoDataJSON)
     geoDataDict = {

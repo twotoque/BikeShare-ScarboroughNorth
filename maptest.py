@@ -124,4 +124,7 @@ def torontoCensusMap (geoDataFilePath, dataSource, rowCompare, title, rowArrayBa
         print("Error - missing fileName or other critical error. The last parameter in your function should be a string ending in .pdf to your exported file")
 
 
-torontoCensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2582, "Amount of Census 2021 respondents who listed Biking as a method of transportation", "Bikers", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusBikingDataTorontoWide.pdf")
+torontoCensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2577, "Amount of Census 2021 respondents who listed driving as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusDrivingDataTorontoWide.pdf")
+torontoCensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2580, "Amount of Census 2021 respondents who listed public transportation as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusPublicTransportDataTorontoWide.pdf")
+torontoCensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2581, "Amount of Census 2021 respondents who listed walking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusWalkingDataTorontoWide.pdf")
+torontoCensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2582, "Amount of Census 2021 respondents who listed biking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusBikingDataTorontoWide.pdf")
