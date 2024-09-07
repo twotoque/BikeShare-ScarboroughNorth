@@ -75,7 +75,7 @@ def transportationSunburstPie (filePath, title,fileName = None):
         text= fileData["values"],
         textinfo="label+text",     
     ))
-    fig_sun.update_layout (margin = dict(t=0, l=0, r=0, b=0), title= title)
+    fig_sun.update_layout (margin = dict(t=0, l=0, r=0,  b=0), title= title)
     fig_sun.show()
     if fileName is not None:
        fig_sun.write_image(fileName, format="pdf", engine="kaleido")
@@ -96,7 +96,8 @@ transportationBar("./data/PublicTransportationUseCases.csv", "Ward 23 survey res
 transportationBar("./data/PublicTransportationInsteadBike.csv", "Ward 23 survey respondents justifying public transportation instead of biking","Reasons given", "./pdf/PublicTransportationInsteadBike.pdf")
 transportationBar("./data/PublicTransportationBike.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods","Responces", "./pdf/PublicTransportationBike.pdf")
 
+transportationSunburstPie("./data/PublicTransportationBikeSunburst.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods", "./pdf/PublicTransportationBikeSunburstPie.pdf")
 
 
 '''
-transportationSunburstPie("./data/PublicTransportationBikeSunburst.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods", "./pdf/PublicTransportationBikeSunburstPie.pdf")
+transportationSunburstPie("./data/BikeShareAwarenessSunburst.csv", "Ward 23 survey respondents regarding prior knowledge of the Bike Share Toronto program", "./pdf/BikeShareAwareness.pdf")
