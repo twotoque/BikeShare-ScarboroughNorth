@@ -19,10 +19,10 @@ def torontoCensusMap (geoDataFilePath, dataSource, rowCompare, title, rowArrayBa
         title - the title of the graph (str)
         rowArrayBar - label for the variable (str)
         mapZoomSettings - specific settings for map zooming (array). Should be set up in form
-            [Zoom variable (int), latitude (float), longitude (float)]
+            [Zoom variable (int), latitude (float), longitude (float), export height (int) [optional], export width (int) [optional]]
             ---
-            Use [11, 43.710, -79.380] for City of Toronto-wide maps
-        fileName - the path where you want to export the file in a PDF form. If left blank, the graph will not be exported. (str)
+            Use [11, 43.710, -79.380, 2000, 1250] for City of Toronto-wide maps
+        fileName - the path where you want to export the file in a PDF form. If left blank, the graph will not be exported. If this parameter is used, ensure mapZoomSettings have export heights and export widths (str)
     '''
     #Opens up geoData, reads and converts it to a JSON (feature), then converts it to a FeatureCollection readable by plotly
     geoData = gpd.read_file(geoDataFilePath)
@@ -115,13 +115,13 @@ def torontoCensusMap (geoDataFilePath, dataSource, rowCompare, title, rowArrayBa
     )
 
     fig.show()
-    if fileName is not None:
-       fig.update_layout(
-            width=2000,  
-            height=1200, 
-            mapbox_zoom=mapZoomSettings[0]/1.28
-       )
-       fig.write_image(fileName, format="pdf", engine="kaleido")
+
+    if fileName is not None and mapZoomSettings[3] is not None or mapZoomSettings[4] is not None:
+       fig.write_image(fileName, format="pdf", engine="kaleido", width= mapZoomSettings[3], height=mapZoomSettings[4])
+    elif fileName is not None: 
+        print("Error - missing or invaild mapZoomSettings. It should have 5 numbers, with the last 2 indicating the width and height of the export accordingly")
+    else: 
+        print("Error - missing fileName or other critical error. The last parameter in your function should be a string ending in .pdf to your exported file")
 
 
-torontoCensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2582, "Amount of Census 2021 respondents who listed Biking as a method of transportation", "Bikers", [11, 43.710, -79.380],  "./pdf/CensusBikingDataTorontoWide.pdf")
+torontoCensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2582, "Amount of Census 2021 respondents who listed Biking as a method of transportation", "Bikers", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusBikingDataTorontoWide.pdf")
