@@ -177,6 +177,14 @@ def pointMap (geoDataFilePath, colourList, nameList, title, mapZoomSettings, fil
 
 
     fig.show()
+    if fileName is not None and len(mapZoomSettings) == 5:
+        fig.update_layout(mapbox_zoom=mapZoomSettings[0] * 1.1)
+        fig.write_image(fileName, format="pdf", engine="kaleido", width= mapZoomSettings[3], height=mapZoomSettings[4])
+    elif fileName is not None: 
+        print("Error - missing or invaild mapZoomSettings. It should have 5 numbers, with the last 2 indicating the width and height of the export accordingly")
+    else: 
+        print("Error - missing fileName or other critical error. The last parameter in your function should be a string ending in .pdf to your exported file")
+
 
 '''
 
@@ -191,4 +199,4 @@ CensusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2581
 CensusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2582, "Amount of Census 2021 respondents who listed biking as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusBikingDataWard23.pdf")
 '''
 
-pointMap(["data/DrivingDestinations-AgincourtNorth.geojson", "data/DrivingDestinations-MalvernEast.geojson", "data/DrivingDestinations-MalvernWest.geojson", "data/DrivingDestinations-Milliken.geojson", "data/DrivingDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"],  ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"] ,"Ward 23 survey respondents regarding driving destinations", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusDrivingDataWard23.pdf")
+pointMap(["data/DrivingDestinations-AgincourtNorth.geojson", "data/DrivingDestinations-MalvernEast.geojson", "data/DrivingDestinations-MalvernWest.geojson", "data/DrivingDestinations-Milliken.geojson", "data/DrivingDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"],  ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"] ,"Ward 23 survey respondents regarding driving destinations", [9.5, 43.650, -79.400, 2000, 1250],  "./pdf/Ward23DrivingDestinations.pdf")
