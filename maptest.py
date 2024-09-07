@@ -6,22 +6,25 @@ import plotly.io as pio
 pio.kaleido.scope.mathjax = None
 
 
-def torontoCensusMap (geoDataFilePath, dataSource, rowCompare, title, rowArrayBar, mapZoomSettings, fileName=None):
+def CensusMap (geoDataFilePath, dataSource, rowCompare, title, rowArrayBar, mapZoomSettings, fileName=None):
     '''
     A function to convert a single row of census 2021 data to a map relative to Toronto's neighbourhoods. 
     ----
     Parameters:
         geoDataFilePath - the path for the geoData (str to .geojson file path)
-            "data/Neighbourhoods.geojson" for city-wide Census 2021 data
+            "data/Neighbourhoods.geojson" for city-wide neighbourhood map
+            "data/Ward23Neighbourhoods.geojson" for Ward 23  neighbourhood map
         dataSource - the path for the data (str to .json file path)
-            "data/CityCensusData.csv" for city-wide neighbourhood map
+            "data/CityCensusData.csv" for city-wide Census 2021 data
+            "data/Ward23CensusData.csv" for Ward 23 Census 2021 data
         rowCompare - the row in dataSource  to measure data from (int)
         title - the title of the graph (str)
         rowArrayBar - label for the variable (str)
         mapZoomSettings - specific settings for map zooming (array). Should be set up in form
-            [Zoom variable (int), latitude (float), longitude (float), export height (int) [optional], export width (int) [optional]]
+            [Zoom variable (float), latitude (float), longitude (float), export height (int) [optional], export width (int) [optional]]
             ---
             Use [11, 43.710, -79.380, 2000, 1250] for City of Toronto-wide maps
+            Use [12.6, 43.810, -79.245, 2000, 1250] for Ward 23 maps
         fileName - the path where you want to export the file in a PDF form. If left blank, the graph will not be exported. If this parameter is used, ensure mapZoomSettings have export heights and export widths (str)
     '''
     #Opens up geoData, reads and converts it to a JSON (feature), then converts it to a FeatureCollection readable by plotly
@@ -115,16 +118,20 @@ def torontoCensusMap (geoDataFilePath, dataSource, rowCompare, title, rowArrayBa
     )
 
     fig.show()
-
-    if fileName is not None and mapZoomSettings[3] is not None or mapZoomSettings[4] is not None:
+    if fileName is not None and len(mapZoomSettings) == 5:
        fig.write_image(fileName, format="pdf", engine="kaleido", width= mapZoomSettings[3], height=mapZoomSettings[4])
     elif fileName is not None: 
         print("Error - missing or invaild mapZoomSettings. It should have 5 numbers, with the last 2 indicating the width and height of the export accordingly")
     else: 
         print("Error - missing fileName or other critical error. The last parameter in your function should be a string ending in .pdf to your exported file")
 
-
-torontoCensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2577, "Amount of Census 2021 respondents who listed driving as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusDrivingDataTorontoWide.pdf")
-torontoCensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2580, "Amount of Census 2021 respondents who listed public transportation as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusPublicTransportDataTorontoWide.pdf")
-torontoCensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2581, "Amount of Census 2021 respondents who listed walking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusWalkingDataTorontoWide.pdf")
-torontoCensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2582, "Amount of Census 2021 respondents who listed biking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusBikingDataTorontoWide.pdf")
+'''
+CensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2577, "Amount of Census 2021 respondents who listed driving as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusDrivingDataTorontoWide.pdf")
+CensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2580, "Amount of Census 2021 respondents who listed public transportation as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusPublicTransportDataTorontoWide.pdf")
+CensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2581, "Amount of Census 2021 respondents who listed walking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusWalkingDataTorontoWide.pdf")
+CensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2582, "Amount of Census 2021 respondents who listed biking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusBikingDataTorontoWide.pdf")
+'''
+CensusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2577, "Amount of Census 2021 respondents who listed driving as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusDrivingDataWard23.pdf")
+CensusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2580, "Amount of Census 2021 respondents who listed public transportation as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusPublicTransportDataWard23.pdf")
+CensusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2581, "Amount of Census 2021 respondents who listed walking as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusWalkingDataWard23.pdf")
+CensusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2582, "Amount of Census 2021 respondents who listed biking as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusBikingDataWard23.pdf")
