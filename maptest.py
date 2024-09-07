@@ -125,13 +125,70 @@ def CensusMap (geoDataFilePath, dataSource, rowCompare, title, rowArrayBar, mapZ
     else: 
         print("Error - missing fileName or other critical error. The last parameter in your function should be a string ending in .pdf to your exported file")
 
+        
+def pointMap (geoDataFilePath, colourList, nameList, title, mapZoomSettings, fileName=None):
+
+    n = 0
+    fig = go.Figure(go.Scattermapbox(
+        mode = "markers",
+        showlegend=True,
+    ))
+
+    for geoFile in geoDataFilePath: 
+        geoData = gpd.read_file(geoFile)
+        geoDataJSON = geoData.to_json()
+        geoDataDict = json.loads(geoDataJSON)
+        geoDataDict = {
+            "ward23GeoData": "FeatureCollection",
+            "features": geoDataDict['features']
+        }
+
+        lonArray = []
+        latArray = []
+        for feature in geoDataDict["features"]:
+            geometry = feature["geometry"]
+            lonArray.append(geometry["coordinates"][0])
+            latArray.append(geometry["coordinates"][1])
+
+        fig.add_trace(go.Scattermapbox(
+            mode = "markers",
+            showlegend=True,
+            lon=lonArray,
+            lat=latArray,
+            marker=dict(size=10, color=colourList[n]), 
+            name = nameList[n]
+        )
+        )
+        n += 1
+        
+    fig.update_layout(
+        mapbox_style="carto-positron", 
+        mapbox_zoom=mapZoomSettings[0], 
+        mapbox_center={"lat": mapZoomSettings[1], "lon": mapZoomSettings[2]}, 
+        margin={"r":0,"t":60,"l":0,"b":0}, 
+        title={"text": title, "x": 0.5, "xanchor": "center", "yanchor": "top", "font": {"size": 25}},
+        legend=dict(
+            x=0.5,               
+            y=0.1,               
+            xanchor="center",  
+            yanchor="top",
+        )
+    )
+
+
+    fig.show()
+
 '''
+
+
 CensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2577, "Amount of Census 2021 respondents who listed driving as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusDrivingDataTorontoWide.pdf")
 CensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2580, "Amount of Census 2021 respondents who listed public transportation as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusPublicTransportDataTorontoWide.pdf")
 CensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2581, "Amount of Census 2021 respondents who listed walking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusWalkingDataTorontoWide.pdf")
 CensusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2582, "Amount of Census 2021 respondents who listed biking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusBikingDataTorontoWide.pdf")
-'''
 CensusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2577, "Amount of Census 2021 respondents who listed driving as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusDrivingDataWard23.pdf")
 CensusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2580, "Amount of Census 2021 respondents who listed public transportation as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusPublicTransportDataWard23.pdf")
 CensusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2581, "Amount of Census 2021 respondents who listed walking as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusWalkingDataWard23.pdf")
 CensusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2582, "Amount of Census 2021 respondents who listed biking as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusBikingDataWard23.pdf")
+'''
+
+pointMap(["data/DrivingDestinations-AgincourtNorth.geojson", "data/DrivingDestinations-MalvernEast.geojson", "data/DrivingDestinations-MalvernWest.geojson", "data/DrivingDestinations-Milliken.geojson", "data/DrivingDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"],  ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"] ,"Ward 23 survey respondents regarding driving destinations", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusDrivingDataWard23.pdf")
