@@ -95,9 +95,10 @@ transportationBar("./data/PublicTransportationDestinations (r_=3).csv", "Ward 23
 transportationBar("./data/PublicTransportationUseCases.csv", "Ward 23 survey respondents regarding general public transportation destinations","Reasons given", "./pdf/PublicTransportationUseCases.pdf")
 transportationBar("./data/PublicTransportationInsteadBike.csv", "Ward 23 survey respondents justifying public transportation instead of biking","Reasons given", "./pdf/PublicTransportationInsteadBike.pdf")
 transportationBar("./data/PublicTransportationBike.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods","Responces", "./pdf/PublicTransportationBike.pdf")
+transportationSunburstPie("./data/BikeShareAwarenessSunburst.csv", "Ward 23 survey respondents regarding prior knowledge of the Bike Share Toronto program", "./pdf/BikeShareAwareness.pdf")
 
 transportationSunburstPie("./data/PublicTransportationBikeSunburst.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods", "./pdf/PublicTransportationBikeSunburstPie.pdf")
 
 
 '''
-transportationSunburstPie("./data/BikeShareAwarenessSunburst.csv", "Ward 23 survey respondents regarding prior knowledge of the Bike Share Toronto program", "./pdf/BikeShareAwareness.pdf")
+transportationBar("./data/BikeSharePlacement (r_=3).csv", "Ward 23 survey respondents regarding future Bike Share Toronto locations (r>=3)","Locations", "./pdf/BikeSharePlacement.pdf")
