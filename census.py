@@ -124,7 +124,6 @@ def censusData (rowSelect, fileName):
         marker_color="blue"
     ))
 
-
     fig_bar.add_shape(
         type="line",
         x0=-0.5,  

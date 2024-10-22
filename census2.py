@@ -26,6 +26,7 @@ for i in range(numberItems):
     rowArray.append(censusData.iloc[selectArray[i]])
     i += 1
 
+print(rowArray)
 #Values 
 carValues = list(map(int, rowArray[0].iloc[1:].values))
 transitValues = list(map(int, rowArray[1].iloc[1:].values))
@@ -71,14 +72,3 @@ fig_bar.update_layout(
 )
 
 fig_bar.show()
-
-def export_pdf(fig):
-    fig.write_image("figure.pdf", format="pdf")
-    return 
-
-if __name__ == "__main__":
-    import sys
-    if len(sys.argv) > 1 and sys.argv[1] == "exportpdf":
-        export_pdf(fig)
-
-app.run_server(debug=True)

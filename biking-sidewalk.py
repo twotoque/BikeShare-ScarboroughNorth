@@ -98,7 +98,12 @@ transportationBar("./data/PublicTransportationBike.csv", "Ward 23 survey respond
 transportationSunburstPie("./data/BikeShareAwarenessSunburst.csv", "Ward 23 survey respondents regarding prior knowledge of the Bike Share Toronto program", "./pdf/BikeShareAwareness.pdf")
 
 transportationSunburstPie("./data/PublicTransportationBikeSunburst.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods", "./pdf/PublicTransportationBikeSunburstPie.pdf")
+transportationBar("./data/BikingInfrastructure-HydroCorridors.csv", "Ward 23 survey respondents rating biking infrastructure, hydro corridors","Rating (1 is highest)", "./pdf/BikingInfrastructure-HydroCorridors.pdf")
 
 
 '''
-transportationBar("./data/BikeSharePlacement (r_=3).csv", "Ward 23 survey respondents regarding future Bike Share Toronto locations (r>=3)","Locations", "./pdf/BikeSharePlacement.pdf")
+transportationBar("./data/BikingInfrastructure-Parks.csv", "Ward 23 survey respondents rating biking infrastructure, parks","Rating (1 is highest)", "./pdf/BikingInfrastructure-Parks.pdf")
+transportationBar("./data/BikingInfrastructure-MajWithBL.csv", "Ward 23 survey respondents rating biking infrastructure, major roads with bike lanes","Rating (1 is highest)", "./pdf/BikingInfrastructure-MajWithBL.pdf")
+transportationBar("./data/BikingInfrastructure-MajWOBL.csv", "Ward 23 survey respondents rating biking infrastructure, major roads without bike lanes","Rating (1 is highest)", "./pdf/BikingInfrastructure-MajWOBL.pdf")
+transportationBar("./data/BikingInfrastructure-Residental.csv", "Ward 23 survey respondents rating biking infrastructure, residental roads","Rating (1 is highest)", "./pdf/BikingInfrastructure-Residental.pdf")
+transportationBar("./data/BikingInfrastructure-Sidewalks.csv", "Ward 23 survey respondents rating biking infrastructure, sidewalks","Rating (1 is highest)", "./pdf/BikingInfrastructure-Sidewalks.pdf")
