@@ -102,8 +102,4 @@ transportationBar("./data/BikingInfrastructure-HydroCorridors.csv", "Ward 23 sur
 
 
 '''
-transportationBar("./data/BikingInfrastructure-Parks.csv", "Ward 23 survey respondents rating biking infrastructure, parks","Rating (1 is highest)", "./pdf/BikingInfrastructure-Parks.pdf")
-transportationBar("./data/BikingInfrastructure-MajWithBL.csv", "Ward 23 survey respondents rating biking infrastructure, major roads with bike lanes","Rating (1 is highest)", "./pdf/BikingInfrastructure-MajWithBL.pdf")
-transportationBar("./data/BikingInfrastructure-MajWOBL.csv", "Ward 23 survey respondents rating biking infrastructure, major roads without bike lanes","Rating (1 is highest)", "./pdf/BikingInfrastructure-MajWOBL.pdf")
-transportationBar("./data/BikingInfrastructure-Residental.csv", "Ward 23 survey respondents rating biking infrastructure, residental roads","Rating (1 is highest)", "./pdf/BikingInfrastructure-Residental.pdf")
-transportationBar("./data/BikingInfrastructure-Sidewalks.csv", "Ward 23 survey respondents rating biking infrastructure, sidewalks","Rating (1 is highest)", "./pdf/BikingInfrastructure-Sidewalks.pdf")
+transportationBar("./data/DrivingInsteadBike.csv", "Ward 23 survey respondents justifying driving instead of biking","Rating (1 is highest)", "./pdf/DrivingInsteadBike.pdf")
