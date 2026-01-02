@@ -3,8 +3,9 @@ import plotly.graph_objects as go
 import pandas
 import plotly.io as pio
 pio.kaleido.scope.mathjax = None
+from utils import export_html
 
-def transportationBar (filePath, title, xaxis_title, fileName = None):  
+def transportationBar (filePath, title, xaxis_title, fileName = None, htmlName = None):  
     ''' 
     Generates a bar graph assuming neighbourhood name is in the x rows and the category labels are in the y columns. 
     ---
@@ -40,8 +41,10 @@ def transportationBar (filePath, title, xaxis_title, fileName = None):
     if fileName is not None:
         fig_bar.write_image(fileName, format="pdf", engine="kaleido", width = "1300")
 
+    if htmlName:
+        export_html(fig_bar, htmlName) 
 
-def transportationSunburstPie (filePath, title,fileName = None):  
+def transportationSunburstPie (filePath, title,fileName = None, htmlName = None):  
     ''' 
     Generates a sunburst pie graph assuming neighbourhood name is in the x rows and the category labels are in the y columns. 
     ---
@@ -81,6 +84,8 @@ def transportationSunburstPie (filePath, title,fileName = None):
        fig_sun.write_image(fileName, format="pdf", engine="kaleido")
 
 
+    if htmlName:
+        export_html(fig_sun, htmlName) 
 '''
 
 
@@ -99,7 +104,37 @@ transportationSunburstPie("./data/BikeShareAwarenessSunburst.csv", "Ward 23 surv
 
 transportationSunburstPie("./data/PublicTransportationBikeSunburst.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods", "./pdf/PublicTransportationBikeSunburstPie.pdf")
 transportationBar("./data/BikingInfrastructure-HydroCorridors.csv", "Ward 23 survey respondents rating biking infrastructure, hydro corridors","Rating (1 is highest)", "./pdf/BikingInfrastructure-HydroCorridors.pdf")
+transportationBar("./data/DrivingInsteadBike.csv", "Ward 23 survey respondents justifying driving instead of biking","Rating (1 is highest)", "./pdf/DrivingInsteadBike.pdf")
 
 
 '''
-transportationBar("./data/DrivingInsteadBike.csv", "Ward 23 survey respondents justifying driving instead of biking","Rating (1 is highest)", "./pdf/DrivingInsteadBike.pdf")
+
+'''
+# Biking Demand and Use Cases
+'''
+transportationBar("./data/BikingDemand-Spring.csv", "Ward 23 survey respondents regarding biking usage in Spring", "Number of times biked per week", "./pdf/SpringBikingUsage.pdf", "biking_usage_spring")
+transportationBar("./data/BikingDemand-Fall.csv", "Ward 23 survey respondents regarding biking usage in Fall","Number of times biked per week", "./pdf/FallBikingUsage.pdf", "biking_usage_fall")
+transportationBar("./data/BikingDemand-Winter.csv", "Ward 23 survey respondents regarding biking usage in Winter", "Number of times biked per week","./pdf/WinterBikingUsage.pdf", "biking_usage_winter") 
+transportationBar("./data/BikingDemand-Summer.csv", "Ward 23 survey respondents regarding biking usage in Summer","Number of times biked per week", "./pdf/SummerBikingUsage.pdf", "biking_usage_summer")
+transportationBar("./data/BikingUseCases.csv", "Ward 23 survey respondents regarding general biking destinations","General biking destinations", "./pdf/BikingUseCases.pdf", "biking_destinations")
+transportationBar("./data/BikingJustification.csv", "Ward 23 survey respondents regarding reasons to bike as opposed to other transportation methods","Reasons given", "./pdf/BikingJustification.pdf", "biking_justification")
+
+'''
+# Public Transportation
+'''
+transportationBar("./data/PublicTransportationDestinations (r_=3).csv", "Ward 23 survey respondents regarding public transportation destinations (r>=3)","Destinations", "./pdf/PublicTransportationDestinations.pdf", "pt_destinations_filtered")
+transportationBar("./data/PublicTransportationUseCases.csv", "Ward 23 survey respondents regarding general public transportation destinations","Reasons given", "./pdf/PublicTransportationUseCases.pdf", "pt_destinations_general")
+transportationBar("./data/PublicTransportationInsteadBike.csv", "Ward 23 survey respondents justifying public transportation instead of biking","Reasons given", "./pdf/PublicTransportationInsteadBike.pdf", "pt_instead_of_bike")
+transportationBar("./data/PublicTransportationBike.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods","Responces", "./pdf/PublicTransportationBike.pdf", "pt_bikes_on_transit")
+
+'''
+# Awareness and Infrastructure
+'''
+transportationSunburstPie("./data/BikeShareAwarenessSunburst.csv", "Ward 23 survey respondents regarding prior knowledge of the Bike Share Toronto program", "./pdf/BikeShareAwareness.pdf", "bikeshare_awareness")
+transportationSunburstPie("./data/PublicTransportationBikeSunburst.csv", "Ward 23 survey respondents regarding bringing bikes within public transportation methods", "./pdf/PublicTransportationBikeSunburstPie.pdf", "pt_bikes_sunburst")
+transportationBar("./data/BikingInfrastructure-HydroCorridors.csv", "Ward 23 survey respondents rating biking infrastructure, hydro corridors","Rating (1 is highest)", "./pdf/BikingInfrastructure-HydroCorridors.pdf", "infra_hydro_corridors")
+
+'''
+# Driving
+'''
+transportationBar("./data/DrivingInsteadBike.csv", "Ward 23 survey respondents justifying driving instead of biking","Rating (1 is highest)", "./pdf/DrivingInsteadBike.pdf", "driving_instead_of_bike")

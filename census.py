@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 import pandas
 import plotly.io as pio
 pio.kaleido.scope.mathjax = None
+from utils import export_html
 
 def transportCensus():
     i = 0 
@@ -85,7 +86,7 @@ def transportCensus():
 
     app.run_server(debug=True)
 
-def censusData (rowSelect, fileName):
+def censusData (rowSelect, fileName, htmlName = None):
     x_values = ["Agincourt South-Malvern West", "Agincourt North",
        "Milliken", "Morningside Heights", "Malvern West", "Malvern East"]
     x_values_alt=["Ward 23 average"]
@@ -148,7 +149,11 @@ def censusData (rowSelect, fileName):
     if fileName is not None:
        fig_bar.write_image(fileName, format="pdf", engine="kaleido")
 
+
+    if htmlName:
+        export_html(fig_bar, htmlName) 
+
     
 
 
-censusData(245, "./pdf/CensusMedianIncomeWard23.pdf")
+censusData(245, "./pdf/CensusMedianIncomeWard23.pdf", "html/CensusMedianIncomeWard23")

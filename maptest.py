@@ -4,9 +4,9 @@ import pandas
 import json
 import plotly.io as pio
 pio.kaleido.scope.mathjax = None
+from utils import export_html
 
-
-def censusMap (geoDataFilePath, dataSource, rowCompare, title, rowArrayBar, mapZoomSettings, fileName=None):
+def censusMap (geoDataFilePath, dataSource, rowCompare, title, rowArrayBar, mapZoomSettings, fileName=None, htmlName = None):
     '''
     A function to convert a single row of census 2021 data to a map relative to Toronto's neighbourhoods. 
     ----
@@ -125,8 +125,11 @@ def censusMap (geoDataFilePath, dataSource, rowCompare, title, rowArrayBar, mapZ
     else: 
         print("Error - missing fileName or other critical error. The last parameter in your function should be a string ending in .pdf to your exported file")
 
+
+    if htmlName:
+        export_html(fig, htmlName) 
         
-def pointMap (geoDataFilePath, colourList, nameList, title, mapZoomSettings, fileName=None):
+def pointMap (geoDataFilePath, colourList, nameList, title, mapZoomSettings, fileName=None, htmlName = None):
 
     n = 0
     fig = go.Figure(go.Scattermapbox(
@@ -185,23 +188,29 @@ def pointMap (geoDataFilePath, colourList, nameList, title, mapZoomSettings, fil
     else: 
         print("Error - missing fileName or other critical error. The last parameter in your function should be a string ending in .pdf to your exported file")
 
+    if htmlName:
+        export_html(fig, htmlName) 
+# Toronto-Wide Census Maps
+censusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2577, "Amount of Census 2021 respondents who listed driving as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250], "./pdf/CensusDrivingDataTorontoWide.pdf", "census_driving_toronto")
+censusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2580, "Amount of Census 2021 respondents who listed public transportation as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250], "./pdf/CensusPublicTransportDataTorontoWide.pdf", "census_pt_toronto")
+censusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2581, "Amount of Census 2021 respondents who listed walking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250], "./pdf/CensusWalkingDataTorontoWide.pdf", "census_walking_toronto")
+censusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2582, "Amount of Census 2021 respondents who listed biking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250], "./pdf/CensusBikingDataTorontoWide.pdf", "census_biking_toronto")
 
-'''
+# Ward 23 Localized Census Maps
+censusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2577, "Amount of Census 2021 respondents who listed driving as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250], "./pdf/CensusDrivingDataWard23.pdf", "census_driving_ward23")
+censusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2580, "Amount of Census 2021 respondents who listed public transportation as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250], "./pdf/CensusPublicTransportDataWard23.pdf", "census_pt_ward23")
+censusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2581, "Amount of Census 2021 respondents who listed walking as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250], "./pdf/CensusWalkingDataWard23.pdf", "census_walking_ward23")
+censusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2582, "Amount of Census 2021 respondents who listed biking as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250], "./pdf/CensusBikingDataWard23.pdf", "census_biking_ward23")
 
+# General Destination Maps
+pointMap(["data/DrivingDestinations-AgincourtNorth.geojson", "data/DrivingDestinations-MalvernEast.geojson", "data/DrivingDestinations-MalvernWest.geojson", "data/DrivingDestinations-Milliken.geojson", "data/DrivingDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"], ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"], "Ward 23 survey respondents regarding driving destinations", [9.5, 43.650, -79.400, 2000, 1250], "./pdf/Ward23DrivingDestinations.pdf", "survey_driving_destinations")
+pointMap(["data/PublicTransportDestinations-AgincourtNorth.geojson", "data/PublicTransportDestinations-MalvernEast.geojson", "data/PublicTransportDestinations-MalvernWest.geojson", "data/PublicTransportDestinations-Milliken.geojson", "data/PublicTransportDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"], ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"], "Ward 23 survey respondents regarding public transit destinations", [11, 43.650, -79.400, 2000, 1250], "./pdf/Ward23PublicTransportDestinations.pdf", "survey_pt_destinations")
+pointMap(["data/BikingDestinations-AgincourtNorth.geojson", "data/BikingDestinations-MalvernEast.geojson", "data/BikingDestinations-MalvernWest.geojson", "data/BikingDestinations-Milliken.geojson", "data/BikingDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"], ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"], "Ward 23 survey respondents regarding biking destinations", [11, 43.700, -79.300, 2000, 1250], "./pdf/Ward23BikingDestinations.pdf", "survey_biking_destinations")
 
-censusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2577, "Amount of Census 2021 respondents who listed driving as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusDrivingDataTorontoWide.pdf")
-censusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2580, "Amount of Census 2021 respondents who listed public transportation as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusPublicTransportDataTorontoWide.pdf")
-censusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2581, "Amount of Census 2021 respondents who listed walking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusWalkingDataTorontoWide.pdf")
-censusMap("data/Neighbourhoods.geojson", "data/CityCensusData.csv", 2582, "Amount of Census 2021 respondents who listed biking as a method of transportation", "Respondents", [11, 43.710, -79.380, 2000, 1250],  "./pdf/CensusBikingDataTorontoWide.pdf")
-censusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2577, "Amount of Census 2021 respondents who listed driving as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusDrivingDataWard23.pdf")
-censusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2580, "Amount of Census 2021 respondents who listed public transportation as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusPublicTransportDataWard23.pdf")
-censusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2581, "Amount of Census 2021 respondents who listed walking as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusWalkingDataWard23.pdf")
-censusMap("data/Ward23Neighbourhoods.geojson", "data/Ward23CensusData.csv", 2582, "Amount of Census 2021 respondents who listed biking as a method of transportation", "Respondents", [12.6, 43.810, -79.245, 2000, 1250],  "./pdf/CensusBikingDataWard23.pdf")
-pointMap(["data/DrivingDestinations-AgincourtNorth.geojson", "data/DrivingDestinations-MalvernEast.geojson", "data/DrivingDestinations-MalvernWest.geojson", "data/DrivingDestinations-Milliken.geojson", "data/DrivingDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"],  ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"] ,"Ward 23 survey respondents regarding driving destinations", [9.5, 43.650, -79.400, 2000, 1250],  "./pdf/Ward23DrivingDestinations.pdf")
-pointMap(["data/PublicTransportDestinations-AgincourtNorth.geojson", "data/PublicTransportDestinations-MalvernEast.geojson", "data/PublicTransportDestinations-MalvernWest.geojson", "data/PublicTransportDestinations-Milliken.geojson", "data/PublicTransportDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"],  ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"] ,"Ward 23 survey respondents regarding public transit destinations", [11, 43.650, -79.400, 2000, 1250],  "./pdf/Ward23PublicTransportDestinations.pdf")
-pointMap(["data/BikingDestinations-AgincourtNorth.geojson", "data/BikingDestinations-MalvernEast.geojson", "data/BikingDestinations-MalvernWest.geojson", "data/BikingDestinations-Milliken.geojson", "data/BikingDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"],  ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"] ,"Ward 23 survey respondents regarding biking destinations", [11, 43.700, -79.300, 2000, 1250],  "./pdf/Ward23BikingDestinations.pdf")
-pointMap(["data/BikeShare-AgincourtNorth.geojson", "data/BikeShare-AgincourtSouthMalvernWest.geojson", "data/BikeShare-MalvernEast.geojson", "data/BikeShare-MalvernWest.geojson", "data/BikeShare-Milliken.geojson", "data/BikeShare-Morningside.geojson"], ["red", "gray", "blue", "purple", "green", "black"],  ["Agincourt North", "Agincourt South-Malvern West","Malvern East", "Malvern West", "Milliken", "Morningside Heights"] ,"Ward 23 survey respondents regarding future Bike Share Toronto stations", [11, 43.650, -79.400, 2000, 1250],  "./pdf/Ward23BikeShare.pdf")
-pointMap(["data/BikingDestinations-AgincourtNorth.geojson", "data/BikingDestinations-MalvernEast.geojson", "data/BikingDestinations-MalvernWest.geojson", "data/BikingDestinations-Milliken.geojson", "data/BikingDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"],  ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"] ,"Ward 23 survey respondents regarding biking destinations", [9.5, 43.700, -79.300, 2000, 1250],  "./pdf/Ward23BikingDestinations.pdf")
-pointMap(["data/DrivingDestinations-AgincourtNorth.geojson", "data/DrivingDestinations-MalvernEast.geojson", "data/DrivingDestinations-MalvernWest.geojson", "data/DrivingDestinations-Milliken.geojson", "data/DrivingDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"],  ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"] ,"Ward 23 survey respondents regarding driving destinations", [11.25, 43.800, -79.300, 2000, 1250],  "./pdf/Ward23DrivingDestinationsScarboroughFocused.pdf")
-'''
-pointMap(["data/BikeShare-AgincourtNorth.geojson", "data/BikeShare-AgincourtSouthMalvernWest.geojson", "data/BikeShare-MalvernEast.geojson", "data/BikeShare-MalvernWest.geojson", "data/BikeShare-Milliken.geojson", "data/BikeShare-Morningside.geojson"], ["red", "gray", "blue", "purple", "green", "black"],  ["Agincourt North", "Agincourt South-Malvern West","Malvern East", "Malvern West", "Milliken", "Morningside Heights"] ,"Ward 23 survey respondents regarding future Bike Share Toronto stations", [11.2, 43.795, -79.300, 2000, 1250],  "./pdf/Ward23BikeShareScarboroughFocused.pdf")
+# Bike Share Station Recommendations
+pointMap(["data/BikeShare-AgincourtNorth.geojson", "data/BikeShare-AgincourtSouthMalvernWest.geojson", "data/BikeShare-MalvernEast.geojson", "data/BikeShare-MalvernWest.geojson", "data/BikeShare-Milliken.geojson", "data/BikeShare-Morningside.geojson"], ["red", "gray", "blue", "purple", "green", "black"], ["Agincourt North", "Agincourt South-Malvern West", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"], "Ward 23 survey respondents regarding future Bike Share Toronto stations", [11, 43.650, -79.400, 2000, 1250], "./pdf/Ward23BikeShare.pdf", "survey_bikeshare_stations")
+
+# Context-Specific Focused Maps
+pointMap(["data/BikingDestinations-AgincourtNorth.geojson", "data/BikingDestinations-MalvernEast.geojson", "data/BikingDestinations-MalvernWest.geojson", "data/BikingDestinations-Milliken.geojson", "data/BikingDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"], ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"], "Ward 23 survey respondents regarding biking destinations", [9.5, 43.700, -79.300, 2000, 1250], "./pdf/Ward23BikingDestinations.pdf", "survey_biking_destinations_wide")
+pointMap(["data/DrivingDestinations-AgincourtNorth.geojson", "data/DrivingDestinations-MalvernEast.geojson", "data/DrivingDestinations-MalvernWest.geojson", "data/DrivingDestinations-Milliken.geojson", "data/DrivingDestinations-Morningside.geojson"], ["red", "blue", "purple", "green", "black"], ["Agincourt North", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"], "Ward 23 survey respondents regarding driving destinations", [11.25, 43.800, -79.300, 2000, 1250], "./pdf/Ward23DrivingDestinationsScarboroughFocused.pdf", "survey_driving_destinations_scarborough")
+pointMap(["data/BikeShare-AgincourtNorth.geojson", "data/BikeShare-AgincourtSouthMalvernWest.geojson", "data/BikeShare-MalvernEast.geojson", "data/BikeShare-MalvernWest.geojson", "data/BikeShare-Milliken.geojson", "data/BikeShare-Morningside.geojson"], ["red", "gray", "blue", "purple", "green", "black"], ["Agincourt North", "Agincourt South-Malvern West", "Malvern East", "Malvern West", "Milliken", "Morningside Heights"], "Ward 23 survey respondents regarding future Bike Share Toronto stations", [11.2, 43.795, -79.300, 2000, 1250], "./pdf/Ward23BikeShareScarboroughFocused.pdf", "survey_bikeshare_stations_scarborough")

@@ -2,9 +2,9 @@ import plotly.graph_objects as go
 import geopandas as gpd 
 import pandas
 import json
+from utils import export_html
 
-
-def ward23CensusMap (rowCompare, title):
+def ward23CensusMap (rowCompare, title, htmlName = None):
     '''
     A function to convert a single row of census 2021 data to a map relative to Toronto's neighbourhoods. 
     ----
@@ -13,7 +13,7 @@ def ward23CensusMap (rowCompare, title):
         title - the title of the graph (str)
     '''
     #Opens up geoData, reads and converts it to a JSON (feature), then converts it to a FeatureCollection readable by plotly
-    geoData = gpd.read_file(geoDataFilePath) #"data/Ward23Neighbourhoods.geojson"
+    geoData = gpd.read_file("data/Ward23Neighbourhoods.geojson") #"data/Ward23Neighbourhoods.geojson"
     geoDataJSON = geoData.to_json()
     geoDataDict = json.loads(geoDataJSON)
     geoDataDict = {
@@ -62,5 +62,7 @@ def ward23CensusMap (rowCompare, title):
 
 
     fig.show()
+    if htmlName:
+        export_html(fig, htmlName)
 
-ward23CensusMap(2582, "Amount of Census 2021 respondents who listed Biking as a method of transportation")
+ward23CensusMap(2582, "Amount of Census 2021 respondents who listed Biking as a method of transportation", "CensusBikingMap")
