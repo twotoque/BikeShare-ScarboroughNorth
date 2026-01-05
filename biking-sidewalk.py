@@ -86,6 +86,14 @@ def transportationSunburstPie (filePath, title,fileName = None, htmlName = None)
 
     if htmlName:
         export_html(fig_sun, htmlName) 
+
+
+
+transportationBar("./data/BikingInfrastructure-MajWithBL.csv", "Ward 23 survey regarding biking on major roads with bike lanes","Rating (1 is highest)", "./pdf/BikingInfrastructure-MajWithBL.pdf", "infra_major_bikelane")
+transportationBar("./data/BikingInfrastructure-MajWOBL.csv", "Ward 23 survey regarding biking on major roads without bike lanes","Rating (1 is highest)", "./pdf/BikingInfrastructure-MajWOBL.pdf", "infra_major_wobl")
+transportationBar("./data/BikingInfrastructure-Parks.csv", "Ward 23 survey regarding biking on parks","Rating (1 is highest)", "./pdf/BikingInfrastructure-Parks.pdf", "infra_parks")
+transportationBar("./data/BikingInfrastructure-Residental.csv", "Ward 23 survey regarding biking on residental areas","Rating (1 is highest)", "./pdf/BikingInfrastructure-Residental.pdf", "infra_residental")
+transportationBar("./data/BikingInfrastructure-Sidewalks.csv", "Ward 23 survey regarding biking on sidewalks","Rating (1 is highest)", "./pdf/BikingInfrastructure-Sidewalks.pdf", "infra_sidewalks")
 '''
 
 
